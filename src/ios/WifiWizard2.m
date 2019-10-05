@@ -100,8 +100,12 @@
 
     if (@available(iOS 11.0, *)) {
         if (ssidString && [ssidString length]) {
-            NEHotspotConfiguration *configuration = [[NEHotspotConfiguration
-                    alloc] initWithSSID:ssidString];
+            NEHotspotConfiguration *configuration;
+            if (@available(iOS 13.0, *)) {
+                configuration = [[NEHotspotConfiguration alloc] initWithSSIDPrefix:ssidString];
+            } else {
+                configuration = [[NEHotspotConfiguration alloc] initWithSSID:ssidString];
+            }
 
             configuration.joinOnce = false;
 
